@@ -9,6 +9,10 @@ const db = low(adapter);
 
 const shortid = require('shortid');
 
+// NOTE: Workaround for development in local.
+const cors = require('cors');
+app.use(cors());
+
 // Set some defaults if your JSON file is empty
 db.defaults({ books: [], user: {} })
   .write();
