@@ -1,29 +1,11 @@
 const express = require('express');
 const app = express();
 
-const low = require('lowdb');
-const FileSync = require('lowdb/adapters/FileSync');
-
-const adapter = new FileSync('db.json');
-const db = low(adapter);
-
-const shortid = require('shortid');
 
 // NOTE: Workaround for development in local.
 const cors = require('cors');
 app.use(cors());
 
-// Set some defaults if your JSON file is empty
-db.defaults({ books: [], user: {} })
-  .write();
-
-// // Set a user using Lodash powerful shorthand syntax
-// db.set('user.name', 'Lluis')
-//   .write()
-
-app.get('/books', function (req, res) {
-  res.send(db.get('books'));
-});
 
 app.post('/books', function (req, res) {
   console.log('saving to database');
