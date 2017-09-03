@@ -1,2 +1,2 @@
 # haufe-express
-simple express for haufe
+simple express setup with lowdb and cors
