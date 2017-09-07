@@ -1,10 +1,13 @@
 const express = require('express');
 const app = express();
-
+const bodyParser = require('body-parser');
 
 // NOTE: Workaround for development in local.
 const cors = require('cors');
 app.use(cors());
+
+// parse application/json
+app.use(bodyParser.json());
 
 
 const bookRouter = require('./src/routes/bookRoutes');
@@ -15,5 +18,5 @@ app.use('/Books', bookRouter);
 
 const port = 5000;
 app.listen(port, function () {
-  console.log(`Example app listening on port ${port}!`);
+  console.log(`listening on port ${port}!`);
 });

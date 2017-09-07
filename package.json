@@ -17,6 +17,7 @@
   "author": "Lluis Suros",
   "license": "MIT",
   "dependencies": {
+    "body-parser": "^1.17.2",
     "express": "^4.15.4",
     "lowdb": "^0.17.1",
     "shortid": "^2.2.8"
