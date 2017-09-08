@@ -27,14 +27,13 @@ const router = () => {
 
             let savedBook;
             if (reqBody.id) {
-                if(isEmpty(getBook(reqBody.id))){
-                    handleError(400, 'invalid book id', next);
-                }
-                savedBook = database
-                    .get('books')
-                    .find({id: reqBody.id})
-                    .assign(reqBody)
-                    .write();
+                isEmpty(getBook(reqBody.id))
+                    ? handleError(400, 'invalid book id', next)
+                    : savedBook = database
+                        .get('books')
+                        .find({id: reqBody.id})
+                        .assign(reqBody)
+                        .write();
             } else {
                 // Add a new book
                 const newBook = Object.assign(
