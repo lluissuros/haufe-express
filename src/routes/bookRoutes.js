@@ -16,11 +16,13 @@ const router = () => {
             const reqBody = req.body;
             if (isEmpty(reqBody)) {
                 handleError(400, 'received empty book', next);
+                return;
             }
 
             const minBookTitleLength = 1;
             if (reqBody.title.length < minBookTitleLength) {
-                handleError(400, 'book title is too short, should be 2 chars', next);
+                handleError(400, `book title is too short, should be more than ${minBookTitleLength}`, next);
+                return;
             }
 
             let savedBook;
@@ -56,8 +58,8 @@ const router = () => {
         .get((req, res, next) => {
             const book = getBook(req.params.id);
             isEmpty(book)
-                ? res.send(book)
-                : handleError(404, 'book is not available', next);
+                ? handleError(404, 'book is not available', next)
+                : res.send(book);
         });
 
     return bookRouter;

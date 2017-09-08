@@ -40,7 +40,7 @@ function knownErrorHandler (err, req, res, next) {
 
 function unknownErrorHandler (err, req, res, next) {
   res.status(500);
-  res.render('error', { error: err });
+  res.send(err);
 }
 
 const port = process.env.PORT || 5000;
