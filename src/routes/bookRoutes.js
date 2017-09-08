@@ -5,7 +5,7 @@ const isEmpty = require('lodash.isempty');
 
 const bookRouter = express.Router();
 
-const getBook = (id) => database.get('books').find({ id: id });
+const getBook = (id) => database.get('books').find({ id: id }).value();
 
 const router = () => {
     bookRouter.route('/')
