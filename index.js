@@ -30,7 +30,7 @@ function logErrors (err, req, res, next) {
 
 function knownErrorHandler (err, req, res, next) {
     const KNOWN_ERROR_STATUS = [400, 404];
-    if (KNOWN_ERROR_STATUS.find(knownErrStatus => knownErrStatus === err.status)) {
+    if (KNOWN_ERROR_STATUS.find(status => status === err.status)) {
         res.status(err.status);
         res.send(err.message || '** this page doesnt exist :p **');
     } else {
