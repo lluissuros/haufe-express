@@ -1,6 +1,7 @@
 const express = require('express');
 const shortid = require('shortid');
 const database = require('../data/database');
+const isEmpty = require('lodash.isempty');
 
 const bookRouter = express.Router();
 
@@ -11,19 +12,22 @@ const router = () => {
         .get((req, res) => {
             res.send(database.get('books'));
         })
-        .post((req, res) => {
+        .post((req, res, next) => {
             const reqBody = req.body;
-            // TODO: check if any body is received
+            if (isEmpty(reqBody)) {
+                handleError(400, 'received empty book', next);
+            }
 
             const minBookTitleLength = 1;
             if (reqBody.title.length < minBookTitleLength) {
-            //TODO: send error
-              //reject(`Title must be at least ${minBookTitleLength} characters.`);
+                handleError(400, 'book title is too short, should be 2 chars', next);
             }
 
             let savedBook;
             if (reqBody.id) {
-                //TODO: send error if sent id is not in our db.
+                if(isEmpty(getBook(reqBody.id))){
+                    handleError(400, 'invalid book id', next);
+                }
                 savedBook = database
                     .get('books')
                     .find({id: reqBody.id})
@@ -49,11 +53,20 @@ const router = () => {
         });
 
     bookRouter.route('/:id')
-        .get((req, res) => {
-            res.send(getBook(req.params.id));
+        .get((req, res, next) => {
+            const book = getBook(req.params.id);
+            isEmpty(book)
+                ? res.send(book)
+                : handleError(404, 'book is not available', next);
         });
 
     return bookRouter;
 };
+
+function handleError(errCode, errMessage, next) {
+    const err = new Error(errMessage);
+    err.status = errCode;
+    next(err);
+}
 
 module.exports = router();
