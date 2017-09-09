@@ -12,10 +12,10 @@ app.use(bodyParser.json());
 
 const bookRouter = require('./src/routes/bookRoutes');
 const notAvaliableRouter = require('./src/routes/notAvailableRoutes');
-// const ratingRouter = require('./src/routes/ratingRoutes')(nav);
+const ratingRouter = require('./src/routes/ratingRoutes');
 
 app.use('/Books', bookRouter);
-// app.use('/Ratings', ratingRouter);
+app.use('/Ratings', ratingRouter);
 app.use('*', notAvaliableRouter);
 
 //error handling
