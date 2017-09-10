@@ -58,6 +58,12 @@ bookRouter.route('/:id')
         isEmpty(book)
             ? handleError(404, 'book is not available', next)
             : res.send(book);
+    })
+    .delete((req, res, next) => {
+        database.get('books')
+            .remove({ id: req.params.id })
+            .write();
+        res.send('DELETE request to homepage');
     });
 
 
